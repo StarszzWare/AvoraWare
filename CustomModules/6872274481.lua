@@ -2944,6 +2944,459 @@ run(function()
 		Default = true
 	})
 end)
+run(function()
+	local AdetundeExploit = {}
+	local AdetundeExploit_List = {Value = "Shield"}
+	local adetunde_remotes = {
+		["Shield"] = function()
+			local args = {
+				[1] = "shield"
+			}
+			
+			local returning = game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("UpgradeFrostyHammer"):InvokeServer(unpack(args))
+			return returning
+		end,
+		["Speed"] = function()
+			local args = {
+				[1] = "speed"
+			}
+			
+			local returning = game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("UpgradeFrostyHammer"):InvokeServer(unpack(args))
+			return returning
+		end,
+		["Strength"] = function()
+			local args = {
+				[1] = "strength"
+			}
+			
+			local returning = game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("UpgradeFrostyHammer"):InvokeServer(unpack(args))
+			return returning
+		end
+	}
+	local current_upgrador = "Shield"
+	local hasnt_upgraded_everything = true
+	local testing = 1
+	AdetundeExploit = GuiLibrary.ObjectsThatCanBeSaved.AvoraWindow.Api.CreateOptionsButton({
+		Name = 'AdetundeExploit',
+		Function = function(calling)
+			if calling then 
+				--if tostring(store.queueType) == "training_room" or store.equippedKit == "adetunde" then
+					--AdetundeExploit["ToggleButton"](false) 
+					current_upgrador = AdetundeExploit_List.Value
+					task.spawn(function()
+						repeat 
+							local returning_table = adetunde_remotes[current_upgrador]() 
+							if type(returning_table) == "table" then
+								local Speed = returning_table["speed"]
+								local Strength = returning_table["strength"]
+								local Shield = returning_table["shield"]
+
+								print("Speed: "..tostring(Speed))
+								print("Strength: "..tostring(Strength))
+								print("Shield: "..tostring(Shield))
+								print("Current Upgrador: "..tostring(current_upgrador))
+
+								if returning_table[string.lower(current_upgrador)] == 3 then
+									if Strength and Shield and Speed then
+										if Strength == 3 or Speed == 3 or Shield == 3 then
+											if (Strength == 3 and Speed == 2 and Shield == 2) or (Strength == 2 and Speed == 3 and Shield == 2) or (Strength == 2 and Speed == 2 and Shield == 3) then
+												warningNotification("AdetundeExploit", "Fully upgraded everything possible!", 7)
+												hasnt_upgraded_everything = false
+											else
+												local things = {}
+												for i,v in pairs(adetunde_remotes) do table.insert(things, i) end
+												for i,v in pairs(things) do if things[i] == current_upgrador then table.remove(things, i) end end
+												local random = things[math.random(1, #things)]
+												current_upgrador = random
+											end
+										end
+									end
+								end
+							else
+								local things = {}
+								for i,v in pairs(adetunde_remotes) do table.insert(things, i) end
+								for i,v in pairs(things) do if things[i] == current_upgrador then table.remove(things, i) end end
+								local random = things[math.random(1, #things)]
+								current_upgrador = random
+							end
+							task.wait(0.1)
+						until not AdetundeExploit.Enabled or hasnt_upgraded_everything == false
+					end)
+				--else
+				--	AdetundeExploit["ToggleButton"](false)
+				--	warningNotification("AdetundeExploit", "Kit required or you need to be in testing mode!", 5)
+				--end
+			end
+		end
+	})
+	local real_list = {}
+	for i,v in pairs(adetunde_remotes) do table.insert(real_list, i) end
+	AdetundeExploit_List = AdetundeExploit.CreateDropdown({
+		Name = 'Preferred Upgrade',
+		List = real_list,
+		Function = function() end,
+		Default = "Shield"
+	})
+end)
+
+run(function()
+    local JellyfishExploit = {Enabled = false}
+
+    JellyfishExploit = GuiLibrary.ObjectsThatCanBeSaved.AvoraWindow.Api.CreateOptionsButton({
+        Name = "JellyfishExploit",
+        Function = function(callback)
+            if callback then -- ye i gave this to catv5
+                task.spawn(function()
+                    repeat task.wait(0.2)
+                        local args = {
+                            [1] = "electrify_jellyfish"
+                        }
+
+                        game:GetService("ReplicatedStorage"):WaitForChild("events-@easy-games/game-core:shared/game-core-networking@getEvents.Events"):WaitForChild("useAbility"):FireServer(unpack(args))
+                    until (not JellyfishExploit.Enabled)
+                end)
+            end
+        end, 
+        HovorText = "Requires Marina kit to use"
+    })
+end)   
+
+run(function()
+    local coolpack = GuiLibrary.ObjectsThatCanBeSaved.AvoraWindow.Api.CreateOptionsButton({
+        Name = "TexturePack",
+        HoverText = "yes",
+        Function = function(callback)
+            if callback then
+
+				local Players = game:GetService("Players")
+				local ReplicatedStorage = game:GetService("ReplicatedStorage")
+				local Workspace = game:GetService("Workspace")
+				local objs = game:GetObjects("rbxassetid://14654171957")
+				local import = objs[1]
+				import.Parent = ReplicatedStorage
+				local index = {
+					{
+						name = "wood_sword",
+						offset = CFrame.Angles(math.rad(0), math.rad(-89), math.rad(-90)),
+						model = import:WaitForChild("Wood_Sword"),
+					},	
+					{
+						name = "stone_sword",
+						offset = CFrame.Angles(math.rad(0), math.rad(-89), math.rad(-90)),
+						model = import:WaitForChild("Stone_Sword"),
+					},
+					{
+						name = "iron_sword",
+						offset = CFrame.Angles(math.rad(0), math.rad(-89), math.rad(-90)),
+						model = import:WaitForChild("Iron_Sword"),
+					},
+					{
+						name = "diamond_sword",
+						offset = CFrame.Angles(math.rad(0), math.rad(-89), math.rad(-90)),
+						model = import:WaitForChild("Diamond_Sword"),
+					},
+					{
+						name = "rageblade",
+						offset = CFrame.Angles(math.rad(0), math.rad(-89), math.rad(-90)),
+						model = import:WaitForChild("Rageblade"),
+					},
+					{
+						name = "emerald_sword",
+						offset = CFrame.Angles(math.rad(0), math.rad(-89), math.rad(-90)),
+						model = import:WaitForChild("Emerald_Sword"),
+					},
+					{
+						name = "wood_scythe",
+						offset = CFrame.Angles(math.rad(0),math.rad(89),math.rad(-90)),
+						model = import:WaitForChild("Wood_Scythe"),
+					},
+					{
+						name = "stone_scythe",
+						offset = CFrame.Angles(math.rad(0),math.rad(89),math.rad(-90)),
+						model = import:WaitForChild("Stone_Scythe"),
+					},
+					{
+						name = "iron_scythe",
+						offset = CFrame.Angles(math.rad(0),math.rad(89),math.rad(-90)),
+						model = import:WaitForChild("Iron_Scythe"),
+					},
+					{
+						name = "diamond_scythe",
+						offset = CFrame.Angles(math.rad(0),math.rad(89),math.rad(-90)),
+						model = import:WaitForChild("Diamond_Scythe"),
+					},
+					{
+						name = "wood_pickaxe",
+						offset = CFrame.Angles(math.rad(0), math.rad(-10), math.rad(-95)),
+						model = import:WaitForChild("Wood_Pickaxe"),
+					},	
+					{
+						name = "stone_pickaxe",
+						offset = CFrame.Angles(math.rad(0), math.rad(-10), math.rad(-95)),
+						model = import:WaitForChild("Stone_Pickaxe"),
+					},	
+					{
+						name = "iron_pickaxe",
+						offset = CFrame.Angles(math.rad(0), math.rad(-10), math.rad(-95)),
+						model = import:WaitForChild("Iron_Pickaxe"),
+					},	
+					{
+						name = "diamond_pickaxe",
+						offset = CFrame.Angles(math.rad(0), math.rad(-89), math.rad(-95)),
+						model = import:WaitForChild("Diamond_Pickaxe"),
+					},
+					{
+						name = "diamond",
+						offset = CFrame.Angles(math.rad(0), math.rad(-90), math.rad(90)),
+						model = import:WaitForChild("Diamond"),
+					},
+					{
+						name = "iron",
+						offset = CFrame.Angles(math.rad(0), math.rad(-90), math.rad(90)),
+						model = import:WaitForChild("Iron"),
+					},
+					{
+						name = "emerald",
+						offset = CFrame.Angles(math.rad(0), math.rad(-90), math.rad(90)),
+						model = import:WaitForChild("Emerald"),
+					},
+}
+				local func = Workspace.Camera.Viewmodel.ChildAdded:Connect(function(tool)	
+					if not tool:IsA("Accessory") then return end	
+					for _, v in ipairs(index) do	
+						if v.name == tool.Name then		
+							for _, part in ipairs(tool:GetDescendants()) do
+								if part:IsA("BasePart") or part:IsA("MeshPart") or part:IsA("UnionOperation") then				
+									part.Transparency = 1
+								end			
+							end		
+							local model = v.model:Clone()
+							model.CFrame = tool:WaitForChild("Handle").CFrame * v.offset
+							model.CFrame *= CFrame.Angles(math.rad(0), math.rad(-50), math.rad(0))
+							model.Parent = tool			
+							local weld = Instance.new("WeldConstraint", model)
+							weld.Part0 = model
+							weld.Part1 = tool:WaitForChild("Handle")			
+							local tool2 = Players.LocalPlayer.Character:WaitForChild(tool.Name)			
+							for _, part in ipairs(tool2:GetDescendants()) do
+								if part:IsA("BasePart") or part:IsA("MeshPart") or part:IsA("UnionOperation") then				
+									part.Transparency = 1				
+								end			
+							end			
+							local model2 = v.model:Clone()
+							model2.Anchored = false
+							model2.CFrame = tool2:WaitForChild("Handle").CFrame * v.offset
+							model2.CFrame *= CFrame.Angles(math.rad(0), math.rad(-50), math.rad(0))
+							if v.name:match("rageblade") then
+								model2.CFrame *= CFrame.new(0.7, 0, -1)                           
+							elseif v.name:match("sword") or v.name:match("blade") then
+								model2.CFrame *= CFrame.new(.6, 0, -1.1) - Vector3.new(0, 0, -.3)
+							elseif v.name:match("axe") and not v.name:match("pickaxe") and v.name:match("diamond") then
+								model2.CFrame *= CFrame.new(.08, 0, -1.1) - Vector3.new(0, 0, -1.1)
+							elseif v.name:match("axe") and not v.name:match("pickaxe") and not v.name:match("diamond") then
+								model2.CFrame *= CFrame.new(-.2, 0, -2.4) + Vector3.new(0, 0, 2.12)
+							elseif v.name:match("scythe") then
+								model2.CFrame *= CFrame.new(-1.15, 0.2, -2.1)
+							elseif v.name:match("iron") then
+								model2.CFrame *= CFrame.new(0, -.24, 0)
+							elseif v.name:match("gold") then
+								model2.CFrame *= CFrame.new(0, .03, 0)
+							elseif v.name:match("diamond") then
+								model2.CFrame *= CFrame.new(0, .027, 0)
+							elseif v.name:match("emerald") then
+								model2.CFrame *= CFrame.new(0, .001, 0)
+							elseif v.name:match("telepearl") then
+								model2.CFrame *= CFrame.new(.1, 0, .1)
+							elseif v.name:match("bow") and not v.name:match("crossbow") then
+								model2.CFrame *= CFrame.new(-.29, .1, -.2)
+							elseif v.name:match("wood_crossbow") and not v.name:match("tactical_crossbow") then
+								model2.CFrame *= CFrame.new(-.6, 0, 0)
+							elseif v.name:match("tactical_crossbow") and not v.name:match("wood_crossbow") then
+								model2.CFrame *= CFrame.new(-.5, 0, -1.2)
+							else
+								model2.CFrame *= CFrame.new(.2, 0, -.2)
+							end
+							model2.Parent = tool2
+							local weld2 = Instance.new("WeldConstraint", model)
+							weld2.Part0 = model2
+							weld2.Part1 = tool2:WaitForChild("Handle")
+						end
+					end
+				end)          
+			end
+        end
+	})
+end)
+
+
+function IsAlive(plr)
+    plr = plr or lplr
+    if not plr.Character then return false end
+    if not plr.Character:FindFirstChild("Head") then return false end
+    if not plr.Character:FindFirstChild("Humanoid") then return false end
+    if plr.Character:FindFirstChild("Humanoid").Health < 0.11 then return false end
+    return true
+end
+run(function()
+    local GodMode = {Enabled = false}
+    GodMode = GuiLibrary.ObjectsThatCanBeSaved.AvoraWindow.Api.CreateOptionsButton({
+        Name = "AntiHit",
+        Function = function(callback)
+            if callback then
+				spawn(function()
+					while task.wait() do
+						if (not GodMode.Enabled) then return end
+						if (not GuiLibrary.ObjectsThatCanBeSaved.FlyOptionsButton.Api.Enabled) and (not GuiLibrary.ObjectsThatCanBeSaved.InfiniteFlyOptionsButton.Api.Enabled) then
+							for i, v in pairs(game:GetService("Players"):GetChildren()) do
+								if v.Team ~= lplr.Team and IsAlive(v) and IsAlive(lplr) then
+									if v and v ~= lplr then
+										local TargetDistance = lplr:DistanceFromCharacter(v.Character:FindFirstChild("HumanoidRootPart").CFrame.p)
+										if TargetDistance < 25 then
+											if not lplr.Character.HumanoidRootPart:FindFirstChildOfClass("BodyVelocity") then
+												repeat task.wait() until store.matchState ~= 0
+												if not (v.Character.HumanoidRootPart.Velocity.Y < -10*5) then
+													lplr.Character.Archivable = true
+
+													local Clone = lplr.Character:Clone()
+													Clone.Parent = workspace
+													Clone.Head:ClearAllChildren()
+													gameCamera.CameraSubject = Clone:FindFirstChild("Humanoid")
+
+													for i,v in pairs(Clone:GetChildren()) do
+														if string.lower(v.ClassName):find("part") and v.Name ~= "HumanoidRootPart" then
+															v.Transparency = 1
+														end
+														if v:IsA("Accessory") then
+															v:FindFirstChild("Handle").Transparency = 1
+														end
+													end
+
+													lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + Vector3.new(0,100000,0)
+
+													game:GetService("RunService").RenderStepped:Connect(function()
+														if Clone ~= nil and Clone:FindFirstChild("HumanoidRootPart") then
+															Clone.HumanoidRootPart.Position = Vector3.new(lplr.Character.HumanoidRootPart.Position.X, Clone.HumanoidRootPart.Position.Y, lplr.Character.HumanoidRootPart.Position.Z)
+														end
+													end)
+
+													task.wait(0.3)
+													lplr.Character.HumanoidRootPart.Velocity = Vector3.new(lplr.Character.HumanoidRootPart.Velocity.X, -1, lplr.Character.HumanoidRootPart.Velocity.Z)
+													lplr.Character.HumanoidRootPart.CFrame = Clone.HumanoidRootPart.CFrame
+													gameCamera.CameraSubject = lplr.Character:FindFirstChild("Humanoid")
+													Clone:Destroy()
+													task.wait(0.15)
+												end
+											end
+										end
+									end
+								end
+							end
+						end
+					end
+				end)
+			end
+        end
+    })
+end)
+
+
+run(function()
+	local AutoUpgradeEra = {}
+	AutoUpgradeEra = GuiLibrary.ObjectsThatCanBeSaved.AvoraWindow.Api.CreateOptionsButton({
+		Name = 'AutoUpgradeEra',
+		Function = function(calling)
+			if calling then 
+				task.spawn(function()
+					repeat task.wait(0.2)
+						local args = {
+							[1] = {
+								["era"] = "iron_era"
+							}
+						}
+
+						game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("RequestPurchaseEra"):InvokeServer(unpack(args))
+
+						local args = {
+							[1] = {
+								["era"] = "diamond_era"
+							}
+						}
+
+						game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("RequestPurchaseEra"):InvokeServer(unpack(args))
+
+						local args = {
+							[1] = {
+								["era"] = "emerald_era"
+							}
+						}
+
+						game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("RequestPurchaseEra"):InvokeServer(unpack(args))
+					until (not AutoUpgradeEra.Enabled)
+				end)
+			end
+		end
+    })
+end)	
+
+run(function()
+    local enchantexploit = {};
+    local enchantexploit = {}
+	local enchantnum = 0
+	local et = 0
+    local effects = {
+        "fire_3", "forest_3", "void_3", "static_3", "updraft_2", 
+        "shield_gen_3", "anti_knockback_2", "rapid_regen_3", "execute_3", 
+        "wind_3", "plunder_2", "critical_strike_3", "volley_3", 
+        "grounded_3", "clingy_3", "life_steal_3", "fortune_1", "fortune_2", "fortune_3"
+	   }
+	local function addEnchants()
+	end
+    enchantexploit = GuiLibrary.ObjectsThatCanBeSaved.AvoraWindow.Api.CreateOptionsButton({
+        Name = 'Dupe',
+        HoverText = 'Gives u stuff.',
+        Function = function(calling)
+            if calling then 
+				pcall(function()
+					if shared.GuiLibrary.ObjectsThatCanBeSaved["Lobby CheckToggle"].Enabled then else
+						shared.GuiLibrary.ObjectsThatCanBeSaved["Lobby CheckToggle"].Api.ToggleButton()
+				   end
+				end)
+				warningNotification("Dupe", "This module might not work every time! Use it before the match starts", 5)
+				et = 0
+				RunLoops:BindToStepped("enchant",function()
+					et = et + 1
+					if et == 45 then
+						for i,v in effects do 
+							bedwars.Client:Get("RequestFortuneDoubleDown").instance:FireServer({statusEffectType = v})
+						end
+						et = 0
+					end
+				end)
+			else
+				RunLoops:UnbindFromStepped("enchant")
+            end
+			task.spawn(function()
+				repeat 
+					local args = {
+						[1] = {
+							["statusEffectType"] = "fortune_1",
+							["fortuneStacks"] = 9999999999999999
+						}
+					}
+					game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("RequestFortuneCashOut"):FireServer(unpack(args))
+					task.wait(0.1)
+					local args = {
+						[1] = {
+							["player"] = game:GetService("Players").LocalPlayer
+						}
+					}
+					
+					game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("FortuneEnchantRequestDoubleDownAmount"):InvokeServer(unpack(args))						
+				until not enchantexploit.Enabled
+			end)
+        end
+    })
+end)
 
 local killauraNearPlayer
 run(function()
@@ -9115,4 +9568,111 @@ task.spawn(function()
 	if not AutoLeave.Enabled then
 		AutoLeave.ToggleButton(false)
 	end
+end)
+local tweenInProgress = function() end
+tweenInProgress = function()
+	if store.autowinning then 
+		return true 
+	end
+	for i,v in next, ({'BedTP'}) do 
+		if isEnabled(v) then 
+			return true
+		end
+	end
+	return false
+end
+run(function()
+    local tppos2 = nil
+    local TweenSpeed = 0.7
+    local HeightOffset = 5
+    local BedTP = {}
+
+    local function teleportWithTween(char, destination)
+        local root = char:FindFirstChild("HumanoidRootPart")
+        if root then
+            destination = destination + Vector3.new(0, HeightOffset, 0)
+            local currentPosition = root.Position
+            if (destination - currentPosition).Magnitude > 0.5 then
+                local tweenInfo = TweenInfo.new(TweenSpeed, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+                local goal = {CFrame = CFrame.new(destination)}
+                local tween = TweenService:Create(root, tweenInfo, goal)
+                tween:Play()
+                tween.Completed:Wait()
+				BedTP.ToggleButton(false)
+            end
+        end
+    end
+
+    local function killPlayer(player)
+        local character = player.Character
+        if character then
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid.Health = 0
+            end
+        end
+    end
+
+    local function getEnemyBed(range)
+        range = range or math.huge
+        local bed = nil
+        local player = lplr
+
+        if not isAlive(player, true) then 
+            return nil 
+        end
+
+        local localPos = player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player.Character.HumanoidRootPart.Position or Vector3.zero
+        local playerTeam = player:GetAttribute('Team')
+        local beds = collectionService:GetTagged('bed')
+
+        for _, v in ipairs(beds) do 
+            if v:GetAttribute('PlacedByUserId') == 0 then
+                local bedTeam = v:GetAttribute('id'):sub(1, 1)
+                if bedTeam ~= playerTeam then 
+                    local bedPosition = v.Position
+                    local bedDistance = (localPos - bedPosition).Magnitude
+                    if bedDistance < range then 
+                        bed = v
+                        range = bedDistance
+                    end
+                end
+            end
+        end
+
+        if not bed then 
+            warningNotification("BedTP", 'No enemy beds found. Total beds: '..#beds, 5)
+        else
+            --warningNotification("BedTP", 'Teleporting to bed at position: '..tostring(bed.Position), 3)
+			warningNotification("BedTP", 'Teleporting to bed at position: '..tostring(bed.Position), 3)
+        end
+
+        return bed
+    end
+
+    BedTP = GuiLibrary["ObjectsThatCanBeSaved"]["AvoraWindow"]["Api"].CreateOptionsButton({
+        ["Name"] = "BedTP",
+        ["Function"] = function(callback)
+            if callback then
+				table.insert(BedTP.Connections, lplr.CharacterAdded:Connect(function(char)
+					if tppos2 then 
+						task.spawn(function()
+							local root = char:WaitForChild("HumanoidRootPart", 9e9)
+							if root and tppos2 then 
+								teleportWithTween(char, tppos2)
+								tppos2 = nil
+							end
+						end)
+					end
+				end))
+                local bed = getEnemyBed()
+                if bed then 
+                    tppos2 = bed.Position
+                    killPlayer(lplr)
+                else
+                    BedTP.ToggleButton(false)
+                end
+            end
+        end
+    })
 end)
