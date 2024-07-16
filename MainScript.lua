@@ -298,6 +298,11 @@ local World = GuiLibrary.CreateWindow({
 	Icon = "vape/assets/WorldIcon.png",
 	IconSize = 16
 })
+local Avora = GuiLibrary.CreateWindow({
+	Name = "Avora",
+	Icon = "vape/assets/UtilityIcon.png",
+	IconSize = 17
+})
 local Friends = GuiLibrary.CreateWindow2({
 	Name = "Friends",
 	Icon = "vape/assets/FriendsIcon.png",
@@ -344,7 +349,13 @@ GUI.CreateButton({
 	Icon = "vape/assets/WorldIcon.png",
 	IconSize = 16
 })
-GUI.CreateDivider("MISC")
+GUI.CreateButton({
+	Name = "Avora",
+	Function = function(callback) Avora.SetVisible(callback) end,
+	Icon = "vape/assets/UtilityIcon.png",
+	IconSize = 17
+})
+GUI.CreateDivider("Misc")
 GUI.CreateButton({
 	Name = "Friends",
 	Function = function(callback) Friends.SetVisible(callback) end,
@@ -799,17 +810,17 @@ end)
 GUI.CreateDivider()
 
 local TextGUI = GuiLibrary.CreateCustomWindow({
-	Name = "Text GUI",
-	Icon = "vape/assets/TextGUIIcon1.png",
+	Name = "Text GUI", 
+	Icon = "vape/assets/TextGUIIcon1.png", 
 	IconSize = 21
 })
 local TextGUICircleObject = {CircleList = {}}
 GUI.CreateCustomToggle({
-	Name = "Text GUI",
+	Name = "Text GUI", 
 	Icon = "vape/assets/TextGUIIcon3.png",
 	Function = function(callback) TextGUI.SetVisible(callback) end,
 	Priority = 2
-})
+})	
 local GUIColorSlider = {RainbowValue = false}
 local TextGUIMode = {Value = "Normal"}
 local TextGUISortMode = {Value = "Alphabetical"}
@@ -913,7 +924,7 @@ VapeBackground.BackgroundTransparency = 1
 VapeBackground.BorderSizePixel = 0
 VapeBackground.BackgroundColor3 = Color3.new()
 VapeBackground.Size = UDim2.new(1, 0, 1, 0)
-VapeBackground.Visible = false
+VapeBackground.Visible = false 
 VapeBackground.Parent = VapeLogoFrame
 VapeBackground.ZIndex = 0
 local VapeBackgroundList = Instance.new("UIListLayout")
@@ -960,8 +971,8 @@ local function TextGUIUpdate()
 		if TextGUISortMode.Value == "Alphabetical" then
 			table.sort(moduleList, function(a, b) return a.Text:lower() < b.Text:lower() end)
 		else
-			table.sort(moduleList, function(a, b)
-				return textService:GetTextSize(a.Text..a.ExtraText, VapeText.TextSize, VapeText.Font, Vector2.new(1000000, 1000000)).X > textService:GetTextSize(b.Text..b.ExtraText, VapeText.TextSize, VapeText.Font, Vector2.new(1000000, 1000000)).X
+			table.sort(moduleList, function(a, b) 
+				return textService:GetTextSize(a.Text..a.ExtraText, VapeText.TextSize, VapeText.Font, Vector2.new(1000000, 1000000)).X > textService:GetTextSize(b.Text..b.ExtraText, VapeText.TextSize, VapeText.Font, Vector2.new(1000000, 1000000)).X 
 			end)
 		end
 
@@ -1011,19 +1022,19 @@ local function TextGUIUpdate()
                 VapeBackground.Position = VapeText.Position + UDim2.fromOffset(-4, -2 + offsets[4])
             end
         end
-
-		if TextGUIMode.Value == "Drawing" then
-			for i,v in pairs(TextGUIObjects.Labels) do
+        
+		if TextGUIMode.Value == "Drawing" then 
+			for i,v in pairs(TextGUIObjects.Labels) do 
 				v.Visible = false
 				v:Remove()
 				TextGUIObjects.Labels[i] = nil
 			end
-			for i,v in pairs(TextGUIObjects.ShadowLabels) do
+			for i,v in pairs(TextGUIObjects.ShadowLabels) do 
 				v.Visible = false
 				v:Remove()
 				TextGUIObjects.ShadowLabels[i] = nil
 			end
-			for i,v in pairs(backgroundList) do
+			for i,v in pairs(backgroundList) do 
 				local textdraw = Drawing.new("Text")
 				textdraw.Text = v
 				textdraw.Size = 23 * VapeScale.Scale
@@ -1073,7 +1084,7 @@ local function TextGUIUpdate()
             backgroundLineExtra.Parent = backgroundFrame
 			table.insert(VapeBackgroundTable, backgroundFrame)
         end
-
+		
 		GuiLibrary.UpdateUI(GUIColorSlider.Hue, GUIColorSlider.Sat, GUIColorSlider.Value)
 	end
 end
@@ -1091,11 +1102,11 @@ TextGUIMode = TextGUI.CreateDropdown({
 	List = {"Normal", "Drawing"},
 	Function = function(val)
 		VapeLogoFrame.Visible = val == "Normal"
-		for i,v in pairs(TextGUIConnections) do
+		for i,v in pairs(TextGUIConnections) do 
 			v:Disconnect()
 		end
-		for i,v in pairs(TextGUIObjects) do
-			for i2,v2 in pairs(v) do
+		for i,v in pairs(TextGUIObjects) do 
+			for i2,v2 in pairs(v) do 
 				v2.Visible = false
 				v2:Remove()
 				v[i2] = nil
@@ -1178,7 +1189,7 @@ TextGUIMode = TextGUI.CreateDropdown({
 				VapeLogo4Drawing.Visible = VapeLogoShadow.Visible
 			end))
 			table.insert(TextGUIConnections, VapeTextExtra:GetPropertyChangedSignal("Visible"):Connect(function()
-				for i,textdraw in pairs(TextGUIObjects.ShadowLabels) do
+				for i,textdraw in pairs(TextGUIObjects.ShadowLabels) do 
 					textdraw.Visible = VapeTextExtra.Visible
 				end
 				VapeCustomDrawingShadow.Visible = VapeCustomText.Visible and VapeTextExtra.Visible
@@ -1203,10 +1214,10 @@ TextGUIMode = TextGUI.CreateDropdown({
 				VapeCustomDrawingText.Color = VapeCustomText.TextColor3
 			end))
 			table.insert(TextGUIConnections, VapeText:GetPropertyChangedSignal("AbsolutePosition"):Connect(function()
-				for i,textdraw in pairs(TextGUIObjects.Labels) do
+				for i,textdraw in pairs(TextGUIObjects.Labels) do 
 					textdraw.Position = VapeText.AbsolutePosition + Vector2.new(VapeText.TextXAlignment == Enum.TextXAlignment.Right and (VapeText.AbsoluteSize.X - textdraw.TextBounds.X), ((textdraw.Size - 3) * i) + 6)
 				end
-				for i,textdraw in pairs(TextGUIObjects.ShadowLabels) do
+				for i,textdraw in pairs(TextGUIObjects.ShadowLabels) do 
 					textdraw.Position = Vector2.new(1, 1) + (VapeText.AbsolutePosition + Vector2.new(VapeText.TextXAlignment == Enum.TextXAlignment.Right and (VapeText.AbsoluteSize.X - textdraw.TextBounds.X), ((textdraw.Size - 3) * i) + 6))
 				end
 			end))
@@ -1227,7 +1238,7 @@ TextGUISortMode = TextGUI.CreateDropdown({
 })
 local TextGUIFonts = {"Arial"}
 local TextGUIFonts2 = {"GothamBold"}
-for i,v in pairs(Enum.Font:GetEnumItems()) do
+for i,v in pairs(Enum.Font:GetEnumItems()) do 
 	if v.Name ~= "Arial" then
 		table.insert(TextGUIFonts, v.Name)
 	end
@@ -1263,23 +1274,23 @@ TextGUI.CreateSlider({
 	end
 })
 TextGUI.CreateToggle({
-	Name = "Shadow",
-	Function = function(callback)
-        VapeTextExtra.Visible = callback
-        VapeLogoShadow.Visible = callback
+	Name = "Shadow", 
+	Function = function(callback) 
+        VapeTextExtra.Visible = callback 
+        VapeLogoShadow.Visible = callback 
     end,
 	HoverText = "Renders shadowed text."
 })
 TextGUI.CreateToggle({
-	Name = "Watermark",
-	Function = function(callback)
+	Name = "Watermark", 
+	Function = function(callback) 
 		VapeLogo.Visible = callback
 		GuiLibrary.UpdateHudEvent:Fire()
 	end,
 	HoverText = "Renders a vape watermark"
 })
 TextGUIBackgroundToggle = TextGUI.CreateToggle({
-	Name = "Render background",
+	Name = "Render background", 
 	Function = function(callback)
 		VapeBackground.Visible = callback
 		GuiLibrary.UpdateHudEvent:Fire()
@@ -1287,7 +1298,7 @@ TextGUIBackgroundToggle = TextGUI.CreateToggle({
 })
 TextGUI.CreateToggle({
 	Name = "Hide Modules",
-	Function = function(callback)
+	Function = function(callback) 
 		if TextGUICircleObject.Object then
 			TextGUICircleObject.Object.Visible = callback
 		end
@@ -1303,20 +1314,20 @@ TextGUICircleObject = TextGUI.CreateCircleWindow({
 TextGUICircleObject.Object.Visible = false
 local TextGUIGradient = TextGUI.CreateToggle({
 	Name = "Gradient Logo",
-	Function = function()
+	Function = function() 
 		GuiLibrary.UpdateHudEvent:Fire()
 	end
 })
 TextGUI.CreateToggle({
 	Name = "Alternate Text",
-	Function = function()
+	Function = function() 
 		GuiLibrary.UpdateHudEvent:Fire()
 	end
 })
 local CustomText = {Value = "", Object = nil}
 TextGUI.CreateToggle({
-	Name = "Add custom text",
-	Function = function(callback)
+	Name = "Add custom text", 
+	Function = function(callback) 
 		VapeCustomText.Visible = callback
 		CustomText.Object.Visible = callback
 		GuiLibrary.UpdateHudEvent:Fire()
@@ -1333,7 +1344,7 @@ CustomText = TextGUI.CreateTextBox({
 CustomText.Object.Visible = false
 
 local function newHealthColor(percent)
-	if percent > 0.5 then
+	if percent > 0.5 then 
 		return Color3.fromRGB(5, 134, 105):lerp(Color3.fromRGB(255, 255, 0), (0.5 - (percent - 0.5)) / 0.5)
 	end
 	return Color3.fromRGB(255, 255, 0):lerp(Color3.fromRGB(249, 57, 55), (0.5 - percent) / 0.5)
@@ -1573,11 +1584,12 @@ local windowSortOrder = {
 	RenderButton = 3,
 	UtilityButton = 4,
 	WorldButton = 5,
-	FriendsButton = 6,
-	TargetsButton = 7,
-	ProfilesButton = 8
+	AvoraButton = 6,
+	FriendsButton = 7,
+	TargetsButton = 8,
+	ProfilesButton = 9
 }
-local windowSortOrder2 = {"Combat", "Blatant", "Render", "Utility", "World"}
+local windowSortOrder2 = {"Combat", "Blatant", "Render", "Utility", "World", "Avora"}
 
 local function getVapeSaturation(val)
 	local sat = 0.9
@@ -1898,12 +1910,13 @@ GUISettings.CreateButton2({
 			RenderWindow = 4,
 			UtilityWindow = 5,
 			WorldWindow = 6,
-			FriendsWindow = 7,
-			TargetsWindow = 8,
-			ProfilesWindow = 9,
-			["Text GUICustomWindow"] = 10,
-			TargetInfoCustomWindow = 11,
-			RadarCustomWindow = 12,
+			AvoraWindow = 7,
+			FriendsWindow = 8,
+			TargetsWindow = 9,
+			ProfilesWindow = 10,
+			["Text GUICustomWindow"] = 11,
+			TargetInfoCustomWindow = 12,
+			RadarCustomWindow = 13,
 		}
 		local storedpos = {}
 		local num = 6
